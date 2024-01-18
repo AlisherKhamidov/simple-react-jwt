@@ -1,25 +1,29 @@
-# Super simple exmaple of jwt token usage with local storage
+# Simple Example of JWT Token Usage with Local Storage
 
-`https://dummyjson.com/docs/auth` - this is documentation for mock-server with two enpoints :
+Deployment link: `https://simple-react-jwt-fbqf.vercel.app/`
 
-- `https://dummyjson.com/auth/login` - login endpoint which sends back JWT token
-- `https://dummyjson.com/auth/me` - send information about current user - only if user is authorized
+Explore the documentation for a mock server at `https://dummyjson.com/docs/auth`. The mock server provides two endpoints:
 
-## /auth/login
-````javascript
+- `https://dummyjson.com/auth/login`: The login endpoint returns a JWT token.
+- `https://dummyjson.com/auth/me`: This endpoint provides information about the current user only if the user is authorized.
+
+## Authentication Token Retrieval
+
+### Login Endpoint
+```javascript
 {
-"id": 15,
-"username": "kminchelle",
-"email": "kminchelle@qq.com",
-"firstName": "Jeanne",
-"lastName": "Halvorson",
-"gender": "female",
-"image": "https://robohash.org/Jeanne.png?set=set4",
-"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmcvYXV0cXVpYXV0LnBuZz9zaXplPTUweDUwJnNldD1zZXQxIiwiaWF0IjoxNjM1NzczOTYyLCJleHAiOjE2MzU3Nzc1NjJ9.n9PQX8w8ocKo0dMCw3g8bKhjB8Wo7f7IONFBDqfxKhs"
+  "id": 15,
+  "username": "kminchelle",
+  "email": "kminchelle@qq.com",
+  "firstName": "Jeanne",
+  "lastName": "Halvorson",
+  "gender": "female",
+  "image": "https://robohash.org/Jeanne.png?set=set4",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmcvYXV0cXVpYXV0LnBuZz9zaXplPTUweDUwJnNldD1zZXQxIiwiaWF0IjoxNjM1NzczOTYyLCJleHAiOjE2MzU3Nzc1NjJ9.n9PQX8w8ocKo0dMCw3g8bKhjB8Wo7f7IONFBDqfxKhs"
 }
-````
+```
 
-## /auth/me
+## User Profile Endpoint
 ```json
 {
   "id": 15,
@@ -33,27 +37,23 @@
 }
 ```
 
+## Page Structure
 
-## What we have? 
+There are two pages: login and profile. The profile page displays information about the current user.
 
-Only two pages: login and profile.
+## Bearer Token Usage
 
-Profile page shows information about current user.
-
-## Bearer
-
-In the fetch on Profile page we send the Header `Authorization` and as a value we use token with prefix `Bearer ` (last symbol is space)
-
+To fetch data on the profile page, include the `Authorization` header in the request with the token prefixed by `Bearer` (with a space at the end):
 
 ```javascript
 fetch("https://dummyjson.com/auth/me", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access")}`,
-      },
-    })
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("access")}`,
+  },
+})
 ```
 
-## Additional notes
+## Additional Considerations
 
-Keep in mind that you can store in local storage not only token itself but also information about current user, so it would persist after refresh of the page.
+Remember that you can store not only the token itself but also information about the current user in local storage. This ensures persistence even after refreshing the page.
